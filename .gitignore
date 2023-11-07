@@ -2,10 +2,11 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-resources
+/src/main/resources/hibernate.properties
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+

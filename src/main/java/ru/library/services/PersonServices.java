@@ -10,7 +10,9 @@ import ru.library.models.Person;
 import ru.library.repositories.BookRepositories;
 import ru.library.repositories.PersonRepositories;
 
+import javax.xml.crypto.Data;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +40,13 @@ public class PersonServices {
 
         if(person.isPresent()){
             Hibernate.initialize(person.get().getBookList());
+
+            person.get().getBookList().forEach(book -> {
+                long diffMin = Math.abs(book.getTakenTime().getTime() - new Date().getTime());
+                if(diffMin > 259_200_000){
+                    book.setTimeOut(true);
+                }
+            });
             return person.get().getBookList();
         }
         else

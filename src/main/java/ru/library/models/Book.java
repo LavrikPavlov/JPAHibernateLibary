@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(name = "book")
@@ -32,6 +33,13 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person personBook;
+
+    @Column(name = "taken_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date takenTime;
+
+    @Transient
+    private boolean timeOut;
 
     public Book(){}
 
@@ -80,5 +88,21 @@ public class Book {
 
     public void setYearProd(int yearProd) {
         this.yearProd = yearProd;
+    }
+
+    public Date getTakenTime() {
+        return takenTime;
+    }
+
+    public void setTakenTime(Date takenTime) {
+        this.takenTime = takenTime;
+    }
+
+    public boolean isTimeOut() {
+        return timeOut;
+    }
+
+    public void setTimeOut(boolean timeOut) {
+        this.timeOut = timeOut;
     }
 }
