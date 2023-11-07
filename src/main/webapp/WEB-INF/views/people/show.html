@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<div>
+    <p th:text="${person.getId()}">VALUE</p>
+    <p th:text="${person.getName() + '  |  '  + person.getYearBorn()}">VALUE</p>
+
+    <div th:if="${book.isEmpty()}">
+        <p>У пользователя отсутсвуют книги</p>
+        <hr>
+    </div>
+
+    <div th:if="${!book.isEmpty()}">
+        <hr>
+        <b>Книги: </b>
+        <br>
+        <table th:each="book : ${book}">
+            <tr th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYearProd()}"></tr>
+            <form th:method="GET" th:action="@{/book/{id}(id=${book.getId()})}">
+                <button type="submit">Редактировать</button>
+            </form>
+        </table>
+    </div>
+    <br/>
+    <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
+        <button type="submit">Редактировать</button>
+    </form>
+
+    <br/>
+    <form th:method="DELETE" th:action="@{/people/{id}/delete(id=${person.getId()})}">
+        <button type="submit">Удалить</button>
+    </form>
+    <br/>
+    <a href="/people">
+        <button type="button">Назад</button>
+    </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div>
+    <div th:each="person : ${people}">
+        <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName() + ' | ' + person.getYearBorn()}">user</a>
+    </div>
+    <hr>
+    <form th:method="GET" th:action="@{/people/new}">
+        <button type="submit">Зарегистрировать нового пользователя</button>
+    </form>
+    <br>
+    <form th:method="GET" th:action="@{/book}">
+        <button type="submit">Список книг</button>
+    </form>
+</div>
+</body>
+</html>
