@@ -31,6 +31,18 @@ public class BookServices {
     }
 
     @Transactional
+    public void release(int id){
+        Book bookOwner = bookRepositories.getOne(id);
+        bookOwner.setPersonBook(null);
+    }
+
+    @Transactional
+    public void assign(int id, Person selectedPerson){
+        Book bookOwner = bookRepositories.getOne(id);
+        bookOwner.setPersonBook(selectedPerson);
+    }
+
+    @Transactional
     public void save(Book book) {
         bookRepositories.save(book);
     }

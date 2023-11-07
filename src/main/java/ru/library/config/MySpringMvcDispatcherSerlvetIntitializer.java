@@ -7,10 +7,10 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import javax.servlet.*;
 import java.util.EnumSet;
 
-public class MySpringMVCDispatcherSerlvetInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class MySpringMvcDispatcherSerlvetIntitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[0];
+        return null;
     }
 
     @Override
@@ -19,10 +19,15 @@ public class MySpringMVCDispatcherSerlvetInitializer extends AbstractAnnotationC
     }
 
     @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        super.onStartup(servletContext);
-        registerCharacterEncodingFilter(servletContext);
-        registerHiddenFieldFilter(servletContext);
+    protected String[] getServletMappings() {
+        return new String[]{"/"};
+    }
+
+    @Override
+    public void onStartup(ServletContext aServletContext) throws ServletException {
+        super.onStartup(aServletContext);
+        registerCharacterEncodingFilter(aServletContext);
+        registerHiddenFieldFilter(aServletContext);
     }
 
     private void registerHiddenFieldFilter(ServletContext aContext) {
@@ -30,7 +35,7 @@ public class MySpringMVCDispatcherSerlvetInitializer extends AbstractAnnotationC
                 new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null, true, "/*");
     }
 
-    public void registerCharacterEncodingFilter(ServletContext aContext){
+    private void registerCharacterEncodingFilter(ServletContext aContext) {
         EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
 
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
@@ -39,10 +44,5 @@ public class MySpringMVCDispatcherSerlvetInitializer extends AbstractAnnotationC
 
         FilterRegistration.Dynamic characterEncoding = aContext.addFilter("characterEncoding", characterEncodingFilter);
         characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
-    }
-
-    @Override
-    protected String[] getServletMappings() {
-        return new String[]{"/"};
     }
 }

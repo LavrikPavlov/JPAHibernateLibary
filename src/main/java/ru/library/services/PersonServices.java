@@ -20,7 +20,7 @@ public class PersonServices {
     private final PersonRepositories personRepositories;
 
     @Autowired
-    public PersonServices(PersonRepositories personRepositories, BookRepositories bookRepositories) {
+    public PersonServices(PersonRepositories personRepositories) {
         this.personRepositories = personRepositories;
     }
 
@@ -42,6 +42,10 @@ public class PersonServices {
         }
         else
             return Collections.emptyList();
+    }
+
+    public Optional<Person> getPersonByName(String name){
+        return personRepositories.findByName(name);
     }
 
     @Transactional

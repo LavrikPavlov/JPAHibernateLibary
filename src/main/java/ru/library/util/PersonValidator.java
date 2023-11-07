@@ -6,15 +6,16 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.library.dao.PersonDAO;
 import ru.library.models.Person;
+import ru.library.services.PersonServices;
 
 @Component
 public class PersonValidator implements Validator {
 
-    private final PersonDAO personDAO;
+    private final PersonServices personServices;
 
     @Autowired
-    public PersonValidator(PersonDAO personDAO) {
-        this.personDAO = personDAO;
+    public PersonValidator(PersonDAO personDAO, PersonServices personServices) {
+        this.personServices = personServices;
     }
 
     @Override
@@ -26,7 +27,7 @@ public class PersonValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Person person = (Person) o;
 
-        if(personDAO.getPersonByFullName(person.getName()).isPresent())
+        if(personServices.getPersonByName(person.getName()).isPresent())
             errors.rejectValue("name", "Человек с таким ФИО уже есть");
     }
 }
