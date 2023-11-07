@@ -1,5 +1,6 @@
 package ru.library.services;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,12 +35,14 @@ public class BookServices {
     public void release(int id){
         Book bookOwner = bookRepositories.getOne(id);
         bookOwner.setPersonBook(null);
+        bookRepositories.save(bookOwner);
     }
 
     @Transactional
     public void assign(int id, Person selectedPerson){
         Book bookOwner = bookRepositories.getOne(id);
         bookOwner.setPersonBook(selectedPerson);
+        bookRepositories.save(bookOwner);
     }
 
     @Transactional
