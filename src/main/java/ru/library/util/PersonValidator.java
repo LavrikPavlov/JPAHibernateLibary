@@ -1,11 +1,11 @@
-package ru.libary.util;
+package ru.library.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.libary.dao.PersonDAO;
-import ru.libary.models.Person;
+import ru.library.dao.PersonDAO;
+import ru.library.models.Person;
 
 @Component
 public class PersonValidator implements Validator {

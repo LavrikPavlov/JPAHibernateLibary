@@ -1,14 +1,15 @@
-package ru.libary.controller;
+package ru.library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.libary.dao.BookDAO;
-import ru.libary.dao.PersonDAO;
-import ru.libary.models.Book;
-import ru.libary.models.Person;
+import ru.library.dao.BookDAO;
+import ru.library.dao.PersonDAO;
+import ru.library.models.Book;
+import ru.library.models.Person;
+import ru.library.repositories.BookRepositories;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -17,26 +18,25 @@ import java.util.Optional;
 @RequestMapping("/book")
 public class BookController {
 
-    private final BookDAO bookDAO;
-    private final PersonDAO personDAO;
+    private final BookRepositories bookRepositories;
 
     @Autowired
-    public BookController(BookDAO bookDAO, PersonDAO personDAO) {
-        this.bookDAO = bookDAO;
-        this.personDAO = personDAO;
+    public BookController(BookRepositories bookRepositories) {
+        this.bookRepositories = bookRepositories;
+
     }
 
     @GetMapping()
     public String index(Model model){
-        model.addAttribute("books", bookDAO.index());
+        model.addAttribute("books", bookRepositories.findAll());
         return "book/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
-        model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("book", bookRepositories.findById(id));
 
-        Optional<Person> bookOwner = bookDAO.getBookOwner(id);
+        Person bookOwner = bookRepositories.getOne();
 
         if(bookOwner.isPresent())
             model.addAttribute("owner", bookOwner.get());

@@ -1,4 +1,4 @@
-package ru.libary.config;
+package ru.library.config;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
