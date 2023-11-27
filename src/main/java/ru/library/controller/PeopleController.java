@@ -1,5 +1,6 @@
 package ru.library.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +12,6 @@ import ru.library.services.BookServices;
 import ru.library.services.PersonServices;
 import ru.library.util.PersonValidator;
 
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/people")
